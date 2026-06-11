@@ -1,6 +1,6 @@
 namespace TelegramBotYtMusic.Services;
 
-public class IAudioDownloaderService
+public interface IAudioDownloaderService
 {
     
 }

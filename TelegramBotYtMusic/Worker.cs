@@ -17,7 +17,7 @@ public class Worker(ILogger<Worker> logger) : BackgroundService
             AllowedUpdates = Array.Empty<UpdateType>() 
         };
 
-        logger.LogInformation("Запуск бота...");
+        logger.LogInformation("Starting...");
 
         _botClient.StartReceiving(
             updateHandler: HandleUpdateAsync,
@@ -39,11 +39,11 @@ public class Worker(ILogger<Worker> logger) : BackgroundService
 
         var chatId = message.Chat.Id;
 
-        logger.LogInformation($"Получено сообщение '{messageText}' в чате {chatId}.");
+        logger.LogInformation($"Get '{messageText}' in chat {chatId}.");
 
         await botClient.SendMessage(
             chatId: chatId,
-            text: "Привет! Ты написал: " + messageText,
+            text: "Echo: " + messageText,
             cancellationToken: cancellationToken);
     }
 
@@ -52,7 +52,7 @@ public class Worker(ILogger<Worker> logger) : BackgroundService
         var errorMessage = exception switch
         {
             ApiRequestException apiRequestException
-                => $"Ошибка Telegram API:\n[{apiRequestException.ErrorCode}]\n{apiRequestException.Message}",
+                => $"Error Telegram API:\n[{apiRequestException.ErrorCode}]\n{apiRequestException.Message}",
             _ => exception.ToString()
         };
 
