@@ -3,6 +3,7 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 using TelegramBotYtMusic.Data;
 using TelegramBotYtMusic.Entities;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace TelegramBotYtMusic.Services;
 
@@ -11,6 +12,17 @@ public class MusicSearchService(
     IAudioDownloaderService audioDownloaderService,
     IServiceScopeFactory scopeFactory) : IMusicSearchService
 {
+    private InlineKeyboardMarkup GetQualityKeyboard()
+    {
+        return new InlineKeyboardMarkup(new[]
+        {
+            new[] 
+            { 
+                InlineKeyboardButton.WithCallbackData("⬇️ 320kbps", "dl_high"), 
+                InlineKeyboardButton.WithCallbackData("⬇️ 128kbps", "dl_low") 
+            }
+        });
+    }
     public async Task ProcessAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var chatId = message.Chat.Id;
@@ -42,7 +54,6 @@ public class MusicSearchService(
             try
             {
                 var filePath = await audioDownloaderService.DownloadAudioAsync(messageText, CancellationToken.None);
-                
                 var fileInfo = new FileInfo(filePath);
                 if (fileInfo.Length > 50 * 1024 * 1024) 
                 {

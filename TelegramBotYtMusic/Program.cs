@@ -16,6 +16,7 @@ builder.Services.AddTransient<IUpdateHandlerService, UpdateHandlerService>();
 builder.Services.AddTransient<IAudioDownloaderService, AudioDownloaderService>();
 builder.Services.AddTransient<ICommandService, CommandService>();
 builder.Services.AddTransient<IMusicSearchService, MusicSearchService>();
+builder.Services.AddTransient<ICallbackQueryService, CallbackQueryService>();
 builder.Services.AddHostedService<Worker>();
 
 var host = builder.Build();
