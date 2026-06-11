@@ -14,6 +14,8 @@ var botToken = builder.Configuration["BotConfiguration:BotToken"];
 builder.Services.AddSingleton<ITelegramBotClient>(new TelegramBotClient(botToken));
 builder.Services.AddTransient<IUpdateHandlerService, UpdateHandlerService>();
 builder.Services.AddTransient<IAudioDownloaderService, AudioDownloaderService>();
+builder.Services.AddTransient<ICommandService, CommandService>();
+builder.Services.AddTransient<IMusicSearchService, MusicSearchService>();
 builder.Services.AddHostedService<Worker>();
 
 var host = builder.Build();
