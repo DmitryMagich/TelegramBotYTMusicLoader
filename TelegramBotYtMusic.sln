@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramBotYtMusic", "TelegramBotYtMusic\TelegramBotYtMusic.csproj", "{B4075D5B-D82F-493B-9F21-4DFC8E894268}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4075D5B-D82F-493B-9F21-4DFC8E894268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4075D5B-D82F-493B-9F21-4DFC8E894268}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4075D5B-D82F-493B-9F21-4DFC8E894268}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4075D5B-D82F-493B-9F21-4DFC8E894268}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
