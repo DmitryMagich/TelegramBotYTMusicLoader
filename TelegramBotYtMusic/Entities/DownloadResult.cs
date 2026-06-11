@@ -1,6 +1,3 @@
 namespace TelegramBotYtMusic.Entities;
 
-public class DownloadResult
-{
-    
-}
+public record DownloadResult(string FilePath, string Title, string Author, string Duration);
