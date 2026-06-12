@@ -15,9 +15,10 @@ RUN apt-get update && \
 
 
 COPY --from=build /app/out .
+COPY cookies.txt .
 
 RUN mkdir -p /app/Downloads && chmod 777 /app/Downloads
 
-COPY cookies.txt .
+
 
 ENTRYPOINT ["dotnet", "TelegramBotYtMusic.dll"]
