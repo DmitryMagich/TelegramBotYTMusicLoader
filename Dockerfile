@@ -9,7 +9,7 @@ FROM mcr.microsoft.com/dotnet/runtime:10.0
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get install -y ffmpeg python3 python3-pip && \
+    apt-get install -y ffmpeg python3 python3-pip nodejs && \
     python3 -m pip install yt-dlp --break-system-packages && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
