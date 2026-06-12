@@ -491,11 +491,11 @@ $RECYCLE.BIN/
 bin/
 obj/
 
-# Игнорируем временные файлы скачивания (твоя папка Downloads)
+# Игнорируем временные файлы скачивания 
 Downloads/
 
-# Игнорируем настройки секретов
+# token
 appsettings.Development.json
 
-# Файл с секретами (токен бота)
+# token
 appsettings.json
