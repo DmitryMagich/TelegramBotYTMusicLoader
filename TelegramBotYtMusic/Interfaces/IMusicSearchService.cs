@@ -5,5 +5,5 @@ namespace TelegramBotYtMusic.Interfaces;
 
 public interface IMusicSearchService
 {
-    Task ProcessAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken);
+    Task MusicSearchAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken);
 }

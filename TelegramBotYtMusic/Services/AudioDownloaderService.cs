@@ -1,5 +1,5 @@
 using CliWrap;
-using CliWrap.Buffered; 
+using CliWrap.Buffered;
 using TelegramBotYtMusic.Interfaces;
 
 namespace TelegramBotYtMusic.Services;
@@ -19,9 +19,7 @@ public class AudioDownloaderService(ILogger<AudioDownloaderService> logger) : IA
         
         var result = await Cli.Wrap("/usr/local/bin/yt-dlp")
             .WithArguments(args => args
-                .Add("--user-agent")
-                .Add("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
-                .Add("--geo-bypass")
+                .Add("--cookies").Add("cookies.txt")
                 .Add("-x")
                 .Add("--audio-format").Add("mp3")
                 .Add("--audio-quality").Add(audioQualityArg)

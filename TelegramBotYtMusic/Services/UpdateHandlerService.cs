@@ -28,7 +28,7 @@ public class UpdateHandlerService(
         }
         else if (message.Text != null)
         {
-            await musicSearchService.ProcessAsync(botClient, message, cancellationToken);
+            await musicSearchService.MusicSearchAsync(botClient, message, cancellationToken);
         }
     }
     

@@ -14,7 +14,7 @@ public class MusicSearchService(
     IAudioDownloaderService audioDownloaderService,
     IServiceScopeFactory scopeFactory) : IMusicSearchService
 {
-    public async Task ProcessAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    public async Task MusicSearchAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var chatId = message.Chat.Id;
         var messageText = message.Text!;
@@ -98,7 +98,7 @@ public class MusicSearchService(
                 if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
                 {
                     File.Delete(filePath);
-                    logger.LogInformation("🧹 Удален временный файл: {FilePath}", filePath);
+                    logger.LogInformation("Удален временный файл: {FilePath}", filePath);
                 }
             }
         }, 
