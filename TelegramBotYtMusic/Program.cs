@@ -21,5 +21,13 @@ builder.Services.AddTransient<ICallbackQueryService, CallbackQueryService>();
 builder.Services.AddHostedService<Worker>();
 
 var host = builder.Build();
+
+using (var scope = host.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ServiceDbContext>();
+    dbContext.Database.Migrate(); 
+}
+
+host.Run();
 host.Run();
 
