@@ -7,6 +7,7 @@ WORKDIR /app
 RUN apt-get update && \
     apt-get install -y ffmpeg python3 python3-pip && \
     pip3 install yt-dlp --break-system-packages && \
+    ln -s $(python3 -m site --user-base)/bin/yt-dlp /usr/local/bin/yt-dlp && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 COPY --from=build /app/out .
