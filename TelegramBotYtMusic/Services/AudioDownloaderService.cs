@@ -19,6 +19,7 @@ public class AudioDownloaderService(ILogger<AudioDownloaderService> logger) : IA
         
         var result = await Cli.Wrap("/usr/local/bin/yt-dlp")
             .WithArguments(args => args
+                .Add("--cookies-from-browser").Add("chrome")
                 .Add("--cookies").Add("cookies.txt")
                 .Add("-x")
                 .Add("--audio-format").Add("mp3")

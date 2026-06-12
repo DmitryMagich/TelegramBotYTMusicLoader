@@ -15,7 +15,6 @@ RUN apt-get update && \
 
 
 COPY --from=build /app/out .
-COPY TelegramBotYtMusic/cookies.txt .
 
 RUN mkdir -p /app/Downloads && chmod 777 /app/Downloads
 
