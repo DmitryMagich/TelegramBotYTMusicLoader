@@ -7,7 +7,7 @@ using TelegramBotYtMusic.Interfaces;
 namespace TelegramBotYtMusic.Services;
 
 public class UpdateHandlerService(
-    ILogger<UpdateHandlerService> logger, // Вернул логгер!
+    ILogger<UpdateHandlerService> logger, 
     ICommandService commandService, 
     IMusicSearchService musicSearchService,
     ICallbackQueryService callbackQueryService) : IUpdateHandlerService

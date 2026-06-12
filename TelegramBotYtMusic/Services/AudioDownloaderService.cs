@@ -17,20 +17,18 @@ public class AudioDownloaderService(ILogger<AudioDownloaderService> logger) : IA
         var templatePath = Path.Combine(downloadsFolder, $"{fileId}.%(ext)s");
         var finalFilePath = Path.Combine(downloadsFolder, $"{fileId}.mp3");
         
-        var result = await Cli.Wrap("yt-dlp")
+        var result = await Cli.Wrap("/usr/local/bin/yt-dlp")
             .WithArguments(args => args
                 .Add("-x")
                 .Add("--audio-format").Add("mp3")
                 .Add("--audio-quality").Add(audioQualityArg)
                 .Add($"ytsearch1:{query}")
                 .Add("-o").Add(templatePath))
-            .WithValidation(CommandResultValidation.None) // <--- Отключаем стандартный краш CliWrap
+            .WithValidation(CommandResultValidation.None) 
             .ExecuteBufferedAsync(cancellationToken);     // спаситель боженько
-
-        // Проверяем, есть ли ошибка
+        
         if (result.ExitCode != 0)
         {
-            // Теперь бот пришлет реальную причину прямо тебе в Телеграм!
             throw new Exception($"Детали от yt-dlp:\n{result.StandardError}");
         }
         
