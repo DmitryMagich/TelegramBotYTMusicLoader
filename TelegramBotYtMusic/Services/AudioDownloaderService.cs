@@ -1,43 +1,42 @@
 using CliWrap;
-using TelegramBotYtMusic.Entities;
+using CliWrap.Buffered; // <--- ОБЯЗАТЕЛЬНО ДОБАВЬ ЭТОТ USING
+using TelegramBotYtMusic.Interfaces;
 
 namespace TelegramBotYtMusic.Services;
 
 public class AudioDownloaderService(ILogger<AudioDownloaderService> logger) : IAudioDownloaderService
 {
-    public async Task<string> DownloadAudioAsync(string searchTerm, CancellationToken cancellationToken)
+    public async Task<string> DownloadAudioAsync(string query, string quality, CancellationToken cancellationToken)
     {
-        string searchQuery = searchTerm.StartsWith("http") ? searchTerm : $"ytsearch:{searchTerm}";
+        string audioQualityArg = quality == "high" ? "0" : "5";
         
-        var downloadPath = Path.Combine(AppContext.BaseDirectory, "Downloads");
-        Directory.CreateDirectory(downloadPath);
+        var downloadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "Downloads");
+        if (!Directory.Exists(downloadsFolder)) Directory.CreateDirectory(downloadsFolder);
+
+        var fileId = Guid.NewGuid().ToString();
+        var templatePath = Path.Combine(downloadsFolder, $"{fileId}.%(ext)s");
+        var finalFilePath = Path.Combine(downloadsFolder, $"{fileId}.mp3");
         
-        var fileTemplate = Path.Combine(downloadPath, "%(title)s.%(ext)s");
-        
-        var arguments = new List<string>
+        var result = await Cli.Wrap("yt-dlp")
+            .WithArguments(args => args
+                .Add("-x")
+                .Add("--audio-format").Add("mp3")
+                .Add("--audio-quality").Add(audioQualityArg)
+                .Add($"ytsearch1:{query}")
+                .Add("-o").Add(templatePath))
+            .WithValidation(CommandResultValidation.None) // <--- Отключаем стандартный краш CliWrap
+            .ExecuteBufferedAsync(cancellationToken);     // спаситель боженько
+
+        // Проверяем, есть ли ошибка
+        if (result.ExitCode != 0)
         {
-            "--quiet",
-            "--extract-audio",
-            "--audio-format", "mp3",
-            "--audio-quality", "0",
-            "--no-mtime",
-            "--default-search", "ytsearch",
-            "--output", fileTemplate,
-            searchQuery
-        };
+            // Теперь бот пришлет реальную причину прямо тебе в Телеграм!
+            throw new Exception($"Детали от yt-dlp:\n{result.StandardError}");
+        }
         
-        await Cli.Wrap("yt-dlp")
-            .WithArguments(arguments)
-            .ExecuteAsync(cancellationToken);
-        
-        var directory = new DirectoryInfo(downloadPath);
-        var downloadedFile = directory.GetFiles("*.mp3")
-            .OrderByDescending(f => f.CreationTime)
-            .FirstOrDefault(f => f.CreationTime >= DateTime.Now.AddSeconds(-10));
+        if (!File.Exists(finalFilePath)) 
+            throw new Exception($"Файл скачался, но не найден: {finalFilePath}.");
 
-        if (downloadedFile == null) 
-            throw new Exception($"Файл скачался, но не нашелся в папке {downloadPath}.");
-
-        return downloadedFile.FullName;
+        return finalFilePath;
     }
 }

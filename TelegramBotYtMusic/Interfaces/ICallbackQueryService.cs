@@ -1,7 +1,7 @@
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
-namespace TelegramBotYtMusic.Services;
+namespace TelegramBotYtMusic.Interfaces;
 
 public interface ICallbackQueryService
 {

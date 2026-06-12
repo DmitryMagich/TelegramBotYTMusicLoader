@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Telegram.Bot;
 using TelegramBotYtMusic;
-using TelegramBotYtMusic.Data;
+using TelegramBotYtMusic.Database;
 using TelegramBotYtMusic.Services;
+using TelegramBotYtMusic.Interfaces;
 
 var builder = Host.CreateApplicationBuilder(args);
 
@@ -21,3 +22,4 @@ builder.Services.AddHostedService<Worker>();
 
 var host = builder.Build();
 host.Run();
+
