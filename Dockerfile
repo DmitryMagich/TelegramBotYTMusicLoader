@@ -13,7 +13,7 @@ WORKDIR /app
 RUN apt-get update && \
     apt-get install -y ffmpeg python3 python3-pip nodejs npm && \
     python3 -m pip install yt-dlp --break-system-packages && \
-    ln -s /usr/bin/nodejs /usr/bin/node && \
+    (ln -sf /usr/bin/nodejs /usr/bin/node || true) && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
